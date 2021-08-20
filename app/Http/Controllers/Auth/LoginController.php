@@ -34,7 +34,7 @@ class LoginController extends Controller
 
     //ceraamos sesion y anulamos token
     public  function logout(Request $request){
-        $request->user()->token()->revoque();
+        $request->user()->token()->revoke();
         
         return response()->json([
             "message "=> "Successfully logged"
