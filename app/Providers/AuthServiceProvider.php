@@ -27,5 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         
         Passport::routes();
+        // agregar ciclo de vida al token
+        Passport::personalAccessTokensExpireIn(now()->addHours(1));
     }
 }
