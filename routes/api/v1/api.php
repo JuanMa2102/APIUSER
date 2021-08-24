@@ -26,8 +26,11 @@ Route::prefix('/user')->group(function(){
     Route::middleware('auth:api')->post('/logout', [LoginController::class, 'logout']);
     
     //Protegemos nuestra rutas
-    Route::middleware('auth:api')->get('/index',[ UserController::class,'index'] );
+    //Route::middleware('auth:api')->get('/index',[ UserController::class,'index'] );
     //Ruta para registrar
     Route::post('/register', [RegisterController::class, 'register']);
     Route::apiResource('/user', UserController::class)->middleware('auth:api');
+    Route::middleware('auth:api')->patch('/user', [UserController::class, 'update']);
+    Route::middleware('auth:api')->delete('/user', [UserController::class, 'destroy']);
+    
 });
