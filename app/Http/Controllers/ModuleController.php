@@ -40,7 +40,7 @@ class ModuleController extends Controller
             'description' => 'required|string|max:255',
             'id_aplication' => 'required'
         ]);
-       $data['id_aplication'] = $this->verifiedId();
+       
         if($validator->fails()){
             return response()->json([
                 'error' => $validator->errors(),
@@ -119,12 +119,4 @@ class ModuleController extends Controller
         ],200);
     }
 
-    public function verifiedId(){
-        $aplication_id_exist = Module::where('id_aplication')->first();
-        if(!$aplication_id_exist){
-            return response()->json([
-                'message' => 'Aplication not exist'
-            ],404);
-        }
-    }
 }
