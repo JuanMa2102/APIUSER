@@ -60,6 +60,7 @@ class Business extends Model
         'id_aplication' => 'required'
     ];
 
+    //relaciones
     public function aplication(){
         return $this->hasOne(Aplication::class, 'id', 'id_aplication');
     }

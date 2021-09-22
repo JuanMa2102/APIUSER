@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Business;
-use App\Http\Resources\BusinessResource;
+use App\Http\Resources\UserHasModuleResource;
+use App\Models\User_has_module;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
-class BusinessController extends Controller
+class UserHasModule extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class BusinessController extends Controller
     public function index()
     {
         //
-        $business =  Business::all();
+        $user_has_module = User_has_module::all();
         return response()->json([
-            'business' => BusinessResource::collection($business),
+            'user_has_module' => new UserHasModuleResource($user_has_module),
             'message' => 'Retrieveds successfully'
         ],200);
     }
@@ -35,27 +35,19 @@ class BusinessController extends Controller
         //
         $data = $request->all();
 
-        $validator = Validator::make($data,[
-            'name' => 'required|string|min:max',
-            'direction' => 'required|string|max:255',
-            'cp' => 'required|integer|min:5',
-            'contact' => 'required|string|max:255',
-            'phone' => 'required|string|max:10|min:10',
-            'email' => 'required|string|max:30',
-            'rfc' => 'max:13|min:13',
-            'id_aplication' => 'required'
+        $vaidator = Validator::make($data,[
+            'id_user'=> 'reuquired',
+            'id_module' => 'required'
         ]);
-
-        if($validator->fails()){
+        if($vaidator->fails()){
             return response()->json([
-                'error' => $validator->errors(),
+                'error' => $vaidator->errors(),
                 'message' => 'Fail validation'
             ],400);
         }
-        $business = Business::create($data);
-
+        $user_has_module = User_has_module::create($data);
         return response()->json([
-            'business' => new BusinessResource($business),
+            'user_has_module' => new UserHasModuleResource($user_has_module),
             'message' => 'Successfully create'
         ],200);
     }
@@ -69,17 +61,16 @@ class BusinessController extends Controller
     public function show($id)
     {
         //
-        $business = Business::find($id);
-        if(empty($business)){
+        $user_has_module = User_has_module::find($id);
+        if(empty($user_has_module)){
             return response()->json([
-                'message' => 'Business not exists'
+                'message' => 'User has module not exists'  
             ],400);
         }
         return response()->json([
-            'business' => new BusinessResource($business),
+            'user_has_module' => new UserHasModuleResource($user_has_module),
             'message' => 'Retrieveds successfully'
         ],200);
-
     }
 
     /**
@@ -92,35 +83,35 @@ class BusinessController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $business = Business::find($id);
-        if(empty($business)){
+        $user_has_module = User_has_module::find($id);
+        if(empty($user_has_module)){
             return response()->json([
-                'message' => 'Business not exists'
+                'message' => 'User has module not found'
             ],400);
         }
-        $business->update($request->all());
-            return response()->json([
-                'business' => new BusinessResource($business),
-                'message' => 'Update successfully'
-            ],200);
+        $user_has_module->update($request->all());
+        return response()->json([
+            'user_has_module' => new UserHasModuleResource($user_has_module),
+            'message' => 'Update successfully'
+        ],200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  @id
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-        $business = Business::find($id);
-        if(empty($business)){
-            return response()->json([
-                'message' => 'Business not found'
+        $user_has_module = User_has_module::find($id);
+        if(empty($user_has_module)){
+            response()->json([
+                'message' => 'User has module not found'
             ],400);
         }
-        $business->delete($id);
+        $user_has_module->delete($id);
         return response()->json([
             'message' => 'Delete successfully'
         ],200);

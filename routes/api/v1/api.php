@@ -5,6 +5,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AplicationController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\BusinessUnitController;
+use App\Http\Controllers\UserHasModuleController;
+use App\Http\Controllers\UserUnitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +39,10 @@ Route::prefix('/user')->group(function(){
     Route::apiResource('businesses', BusinessController::class);
     // Route CRUD Modules
     Route::apiResource('modules', ModuleController::class);
-   
-   
-    
+    // Route CRUD Business unit
+    Route::apiResource('businesUnits', BusinessUnitController::class);
+    // Route CRUD User unit
+    Route::apiResource('userUnits', UserUnitController::class);
+    // Rouer CRUS User has module
+    Route::apiResource('userHasModule', UserHasModuleController::class);
 });

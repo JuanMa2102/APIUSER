@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Business;
-use App\Http\Resources\BusinessResource;
+use App\Http\Resources\UserUnitResource;
+use App\Models\User_unit;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
-class BusinessController extends Controller
+class UserUnit extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class BusinessController extends Controller
     public function index()
     {
         //
-        $business =  Business::all();
+        $user_unit = User_unit::all();
         return response()->json([
-            'business' => BusinessResource::collection($business),
+            'user_unit' => new UserUnitResource($user_unit),
             'message' => 'Retrieveds successfully'
         ],200);
     }
@@ -34,28 +34,19 @@ class BusinessController extends Controller
     {
         //
         $data = $request->all();
-
         $validator = Validator::make($data,[
-            'name' => 'required|string|min:max',
-            'direction' => 'required|string|max:255',
-            'cp' => 'required|integer|min:5',
-            'contact' => 'required|string|max:255',
-            'phone' => 'required|string|max:10|min:10',
-            'email' => 'required|string|max:30',
-            'rfc' => 'max:13|min:13',
-            'id_aplication' => 'required'
+            'id_business_unit' => 'required',
+            'id_user' => 'required'
         ]);
-
         if($validator->fails()){
             return response()->json([
                 'error' => $validator->errors(),
                 'message' => 'Fail validation'
-            ],400);
+            ], 400);
         }
-        $business = Business::create($data);
-
+        $user_unit = User_unit::create($data);
         return response()->json([
-            'business' => new BusinessResource($business),
+            'user_unit' => new UserUnitResource($user_unit),
             'message' => 'Successfully create'
         ],200);
     }
@@ -63,23 +54,22 @@ class BusinessController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  $id
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         //
-        $business = Business::find($id);
-        if(empty($business)){
+        $user_unit = User_unit::find($id);
+        if(empty($user_unit)){
             return response()->json([
-                'message' => 'Business not exists'
+                'message' => 'User Unit not exists'
             ],400);
         }
         return response()->json([
-            'business' => new BusinessResource($business),
+            'user_unit' => new UserUnitResource($user_unit),
             'message' => 'Retrieveds successfully'
         ],200);
-
     }
 
     /**
@@ -92,35 +82,36 @@ class BusinessController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $business = Business::find($id);
-        if(empty($business)){
-            return response()->json([
+        $user_unit = User_unit::find($id);
+        if(empty($user_unit)){
+            response()->json([
                 'message' => 'Business not exists'
             ],400);
         }
-        $business->update($request->all());
-            return response()->json([
-                'business' => new BusinessResource($business),
-                'message' => 'Update successfully'
-            ],200);
+
+        $user_unit->update($request->all());
+        return response()->json([
+            'business' => new UserUnitResource($user_unit),
+            'message' => 'Update successfully'
+        ],200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  @id
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-        $business = Business::find($id);
-        if(empty($business)){
+        $user_unit = User_unit::find($id);
+        if(empty($user_unit)){
             return response()->json([
                 'message' => 'Business not found'
             ],400);
         }
-        $business->delete($id);
+        $user_unit->delete($id);
         return response()->json([
             'message' => 'Delete successfully'
         ],200);
