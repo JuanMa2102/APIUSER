@@ -23,6 +23,11 @@ class ResetRequest extends FormRequest
      */
     public function rules()
     {
+
+
+
+
+        
         return [
             //
             'token' => 'required',
