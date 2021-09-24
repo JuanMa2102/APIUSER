@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Resources\BusinessUnitResource;
+use App\Models\Business;
 use App\Models\Business_unit;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -44,6 +45,13 @@ class BusinessUnit extends Controller
             return response()->json([
                 'error' => $validator->errors(),
                 'message' => 'Fail validation'
+            ],400);
+        }
+
+        $business = Business::where('id', '=', $data['id_business']);
+        if($business == null){
+            response()->json([
+                'message' => 'No existe un negocio con este identificador, porfavor registra un negocio primero'
             ],400);
         }
 

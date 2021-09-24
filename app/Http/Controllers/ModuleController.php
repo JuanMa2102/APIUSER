@@ -40,13 +40,26 @@ class ModuleController extends Controller
             'description' => 'required|string|max:255',
             'id_aplication' => 'required'
         ]);
-       
+        
+        
         if($validator->fails()){
             return response()->json([
                 'error' => $validator->errors(),
                 'message' => 'Fail validation'
             ],400);
         }
+
+        /**
+         * Identifica si existe la apliciación
+         * ante de hacer el registro 
+        */
+        $aplication = Aplication::where('id', '=', $data['id_aplication'])->first();
+        if($aplication==null){
+            return response()->json([
+                'message' => 'No existe está aplicación con este identificador, porfavor registra una aplicación primero'
+            ],400);
+        }
+
         $module = Module::create($data);
         return response()->json([
             'mudule' => new ModuleResource($module),

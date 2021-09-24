@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserHasModuleResource;
+use App\Models\Module;
+use App\Models\User;
 use App\Models\User_has_module;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -45,6 +47,21 @@ class UserHasModule extends Controller
                 'message' => 'Fail validation'
             ],400);
         }
+        
+        $user = User::where('id', '=', $data['id_user'])->first();
+        if($user == null){
+            return response()->json([
+                'message' => 'No existe este usuario, favor de verificar'
+            ], 400);
+        }
+
+        $module = Module::where('id', '=', $data['id_module'])->first();
+        if($module == null){
+            return response()->json([
+                'message' => 'No existe este modulo, favor de verificar'
+            ], 400);
+        }
+
         $user_has_module = User_has_module::create($data);
         return response()->json([
             'user_has_module' => new UserHasModuleResource($user_has_module),

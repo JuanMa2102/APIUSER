@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Business;
 use App\Http\Resources\BusinessResource;
+use App\Models\Aplication;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -46,12 +47,25 @@ class BusinessController extends Controller
             'id_aplication' => 'required'
         ]);
 
+
         if($validator->fails()){
             return response()->json([
                 'error' => $validator->errors(),
                 'message' => 'Fail validation'
             ],400);
         }
+
+        /**
+         * Identifica si existe la apliciación
+         * ante de hacer el registro 
+        */
+        $aplication = Aplication::where('id', '=', $data['id_aplication'])->first();
+        if($aplication == null){
+            return response()->json([
+                'message' => 'No existe está aplicación con este identificador, porfavor registra una aplicación primero'
+            ],400);
+        }
+
         $business = Business::create($data);
 
         return response()->json([
