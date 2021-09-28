@@ -35,6 +35,8 @@ class ForgotPasswordController extends Controller
             'token' => $token,
         ]);
 
+
+        
         //enviar mensage
         $response = Password::sendResetLink($data);
         $message = $response == Password::RESET_LINK_SENT ? 'Mail send successfully': "ERROR SEND";
