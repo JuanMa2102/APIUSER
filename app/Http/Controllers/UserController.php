@@ -35,8 +35,13 @@ class UserController extends Controller
         $data = $request->all();
         $validator = Validator::make($data, [
             'name' => 'required|max:255',
+            'lastname' => 'required|string|max:255',
+            'phone' => 'required|string|max:10|min:10',
+            'direction' => 'required|string|max:255',
+            'cp' => 'required|integer|min:5',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
+            'profile' => 'required|string|max:255'
         ]);
 
         $data['password'] = Hash::make($request->password);

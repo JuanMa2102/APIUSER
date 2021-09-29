@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBussinesUnitsTable extends Migration
+class CreateUserHasModulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateBussinesUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bussines_units', function (Blueprint $table) {
+        Schema::create('user_has_modules', function (Blueprint $table) {
             $table->id();
-            $table->string('area');
-            $table->string('description');
-            $table->unsignedBigInteger('company_id');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_module');
             $table->timestamps();
-            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_module')->references('id')->on('modules');
         });
     }
 
@@ -30,6 +30,6 @@ class CreateBussinesUnitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bussines_units');
+        Schema::dropIfExists('user_has_modules');
     }
 }
