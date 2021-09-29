@@ -31,6 +31,7 @@ class LoginController extends Controller
         
         
     }
+    
 
     //ceraamos sesion y anulamos token
     public  function logout(Request $request){
