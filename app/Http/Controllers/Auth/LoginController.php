@@ -32,16 +32,7 @@ class LoginController extends Controller
         
         
     }
-    
-
-    public function userActual(){
-        $user = Auth::user();
-        if(Auth::check()){
-            return response([
-                'user' => $user
-            ]);
-        }
-    }
+ 
 
     //ceraamos sesion y anulamos token
     public  function logout(Request $request){
