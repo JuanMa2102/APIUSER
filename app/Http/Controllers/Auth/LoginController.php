@@ -32,6 +32,7 @@ class LoginController extends Controller
         
         
     }
+    
 
     public function userActual(){
         $user = Auth::user();
