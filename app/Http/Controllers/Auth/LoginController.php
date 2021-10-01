@@ -34,13 +34,9 @@ class LoginController extends Controller
     }
     
     
-    public function userActual(){
-        $user = Auth::user();
-        if(Auth::check()){
-            return response([
-                'user' => $user
-            ]);
-        }
+    public function user(){
+        
+        return  response(['user' => Auth::user()]);
     }
 
     //ceraamos sesion y anulamos token

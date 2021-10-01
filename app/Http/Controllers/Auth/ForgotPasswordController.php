@@ -10,9 +10,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Stringable;
+
 
 class ForgotPasswordController extends Controller
 {
@@ -32,21 +31,22 @@ class ForgotPasswordController extends Controller
         try{
         DB::table('password_resets')->insert([
             'email' => $data['email'],
-            'token' => $token,
+            'token' => $token
         ]);
 
-
+        
         
         //enviar mensage
         $response = Password::sendResetLink($data);
-        $message = $response == Password::RESET_LINK_SENT ? 'Mail send successfully': "ERROR SEND";
+        $message = $response == Password::RESET_LINK_SENT ? 'Mail send successfully': 'ERROR SEND';
           return response()->json($message);
 
-    }catch(\Exception $exception){
-        return response([
-            'message' => $exception->getMessage()
-        ],400);
-    }
+        }catch(\Exception $exception){
+            return response([
+                'message' => $exception->getMessage()
+            ],400);
+        }
+
     }
 
     public function resetPassword(ResetRequest $request){

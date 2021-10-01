@@ -29,7 +29,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/user')->group(function(){
     //Route login
     Route::post('/login', [LoginController::class,'login']);
-    Route::get('/user', [LoginController::class, 'userActual']);
+    
+    Route::middleware('auth:api')->get('/user', [LoginController::class, 'user']);
     //Route Logout
     Route::middleware('auth:api')->post('/logout', [LoginController::class, 'logout']);
     //Route para register users
