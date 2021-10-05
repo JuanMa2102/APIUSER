@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\UserUnitResource;
-use App\Models\Business_unit;
-use App\Models\User;
-use App\Models\User_unit;
-use Illuminate\Support\Facades\Validator;
+use App\Models\UnitUser;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserUnitResource;
+use App\Models\UnitBusiness;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
-class UserUnit extends Controller
+
+class UserUnitController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +20,7 @@ class UserUnit extends Controller
     public function index()
     {
         //
-        $user_unit = User_unit::all();
+        $user_unit = UnitUser::all();
         return response()->json([
             'user_unit' => new UserUnitResource($user_unit),
             'message' => 'Retrieveds successfully'
@@ -46,7 +47,7 @@ class UserUnit extends Controller
                 'message' => 'Fail validation'
             ], 400);
         }
-        $business_unit = Business_unit::where('id', '=', $data['id_business_unit']);
+        $business_unit = UnitBusiness::where('id', '=', $data['id_business_unit']);
         if($business_unit == null){
             return response()->json([
                 'message' => 'No existe está unidad de negocio con este identificador, porfavor registra una unidad de negocio primero'
@@ -60,7 +61,7 @@ class UserUnit extends Controller
             ],400);
         } 
 
-        $user_unit = User_unit::create($data);
+        $user_unit = UnitUser::create($data);
         return response()->json([
             'user_unit' => new UserUnitResource($user_unit),
             'message' => 'Successfully create'
@@ -70,13 +71,13 @@ class UserUnit extends Controller
     /**
      * Display the specified resource.
      *
-     * @param $id
+     * @param  \App\Models\UnitUser  $unitUser
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         //
-        $user_unit = User_unit::find($id);
+        $user_unit = UnitUser::find($id);
         if(empty($user_unit)){
             return response()->json([
                 'message' => 'User Unit not exists'
@@ -92,13 +93,13 @@ class UserUnit extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  $id
+     * @param  \App\Models\UnitUser  $unitUser
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //
-        $user_unit = User_unit::find($id);
+        $user_unit = UnitUser::find($id);
         if(empty($user_unit)){
             response()->json([
                 'message' => 'Business not exists'
@@ -115,13 +116,13 @@ class UserUnit extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param $id
+     * @param  \App\Models\UnitUser  $unitUser
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-        $user_unit = User_unit::find($id);
+        $user_unit = UnitUser::find($id);
         if(empty($user_unit)){
             return response()->json([
                 'message' => 'Business not found'

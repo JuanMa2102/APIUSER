@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Business_unit;
+use App\Models\UnitBusiness;
 use App\Models\User;
 
-class User_unit extends Model
+class UnitUser extends Model
 {
     use HasFactory;
 
@@ -43,7 +43,7 @@ class User_unit extends Model
 
     //relaciones
     public function businessUnit(){
-        return $this->hasOne(Business_unit::class, 'id', 'id_business_unit');
+        return $this->hasOne(UnitBusiness::class, 'id', 'id_business_unit');
     }
 
     public function user(){

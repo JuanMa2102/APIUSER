@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Module;
+use App\Models\User;
 
-class User_has_module extends Model
+class UserHas extends Model
 {
     use HasFactory;
 

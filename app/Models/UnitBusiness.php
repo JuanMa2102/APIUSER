@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Business;
 
-class Business_unit extends Model
+class UnitBusiness extends Model
 {
     use HasFactory;
 

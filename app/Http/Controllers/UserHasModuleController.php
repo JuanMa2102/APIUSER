@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserHas;
+use Illuminate\Http\Request;
 use App\Http\Resources\UserHasModuleResource;
 use App\Models\Module;
 use App\Models\User;
-use App\Models\User_has_module;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 
-class UserHasModule extends Controller
+
+class UserHasModuleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +20,7 @@ class UserHasModule extends Controller
     public function index()
     {
         //
-        $user_has_module = User_has_module::all();
+        $user_has_module = UserHas::all();
         return response()->json([
             'user_has_module' => new UserHasModuleResource($user_has_module),
             'message' => 'Retrieveds successfully'
@@ -62,7 +63,7 @@ class UserHasModule extends Controller
             ], 400);
         }
 
-        $user_has_module = User_has_module::create($data);
+        $user_has_module = UserHas::create($data);
         return response()->json([
             'user_has_module' => new UserHasModuleResource($user_has_module),
             'message' => 'Successfully create'
@@ -72,13 +73,13 @@ class UserHasModule extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  $id
+     * @param  \App\Models\UserHas  $userHas
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         //
-        $user_has_module = User_has_module::find($id);
+        $user_has_module = UserHas::find($id);
         if(empty($user_has_module)){
             return response()->json([
                 'message' => 'User has module not exists'  
@@ -94,13 +95,13 @@ class UserHasModule extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  $id
+     * @param  \App\Models\UserHas  $userHas
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //
-        $user_has_module = User_has_module::find($id);
+        $user_has_module = UserHas::find($id);
         if(empty($user_has_module)){
             return response()->json([
                 'message' => 'User has module not found'
@@ -116,21 +117,22 @@ class UserHasModule extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  $id
+     * @param  \App\Models\UserHas  $userHas
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-        $user_has_module = User_has_module::find($id);
-        if(empty($user_has_module)){
-            response()->json([
-                'message' => 'User has module not found'
-            ],400);
-        }
-        $user_has_module->delete($id);
-        return response()->json([
-            'message' => 'Delete successfully'
-        ],200);
+         //
+         $user_has_module = UserHas::find($id);
+         if(empty($user_has_module)){
+             response()->json([
+                 'message' => 'User has module not found'
+             ],400);
+         }
+         $user_has_module->delete($id);
+         return response()->json([
+             'message' => 'Delete successfully'
+         ],200);
     }
 }
