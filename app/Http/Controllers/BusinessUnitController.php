@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Business_unit;
+use App\Models\UnitBusiness;
 use Illuminate\Http\Request;
 use App\Http\Resources\BusinessUnitResource;
 use App\Models\Business;
+
 use Illuminate\Support\Facades\Validator;
 
 
@@ -19,7 +20,7 @@ class BusinessUnitController extends Controller
     public function index()
     {
         //
-        $business_unit = Business_unit::all();
+        $business_unit = UnitBusiness::all();
         return response()->json([
             'business_unit' => BusinessUnitResource::collection($business_unit),
             'message' => 'Retrieveds successfully'
@@ -55,7 +56,7 @@ class BusinessUnitController extends Controller
             ],400);
         }
 
-        $business_unit = Business_unit::create($data);
+        $business_unit = UnitBusiness::create($data);
         return response()->json([
             'business_unit' => new BusinessUnitResource($business_unit),
             'message' => 'Successfully create'
@@ -71,18 +72,17 @@ class BusinessUnitController extends Controller
     public function show($id)
     {
         //
-         //
-         $business_unit = Business_unit::find($id);
-         if(empty($business_unit)){
-             return response()->json([
-                 'message' => 'Business Unit not exists'
-             ],400);
-         }
- 
-         return response()->json([
-             'business_unit' => new BusinessUnitResource($business_unit),
-             'message' => 'Retrieveds successfully'
-         ], 200);
+        $business_unit = UnitBusiness::find($id);
+        if(empty($business_unit)){
+            return response()->json([
+                'message' => 'Business Unit not exists'
+            ],400);
+        }
+
+        return response()->json([
+            'business_unit' => new BusinessUnitResource($business_unit),
+            'message' => 'Retrieveds successfully'
+        ], 200);
     }
 
     /**
@@ -95,7 +95,7 @@ class BusinessUnitController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $business_unit = Business_unit::find($id);
+        $business_unit = UnitBusiness::find($id);
         if(empty($business_unit)){
             return response()->json([
                 'message' => 'Business Unit not found'
@@ -118,16 +118,15 @@ class BusinessUnitController extends Controller
     public function destroy($id)
     {
         //
-         //
-         $business_unit = Business_unit::find($id);
-         if(empty($business_unit)){
-             return response()->json([
-                 'message' => 'Business Unit not found'
-             ],400);
-             $business_unit->delete($id);
-             return response()->json([
-                 'message' => 'Delete successfully'
-             ],200);
-         }
+        $business_unit = UnitBusiness::find($id);
+        if(empty($business_unit)){
+            return response()->json([
+                'message' => 'Business Unit not found'
+            ],400);
+            $business_unit->delete($id);
+            return response()->json([
+                'message' => 'Delete successfully'
+            ],200);
+        }
     }
 }

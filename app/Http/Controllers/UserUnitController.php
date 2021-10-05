@@ -22,7 +22,7 @@ class UserUnitController extends Controller
         //
         $user_unit = UnitUser::all();
         return response()->json([
-            'user_unit' => new UserUnitResource($user_unit),
+            'user_unit' =>  UserUnitResource::collection($user_unit),
             'message' => 'Retrieveds successfully'
         ],200);
     }

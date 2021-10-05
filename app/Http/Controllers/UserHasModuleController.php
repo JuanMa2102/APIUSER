@@ -22,7 +22,7 @@ class UserHasModuleController extends Controller
         //
         $user_has_module = UserHas::all();
         return response()->json([
-            'user_has_module' => new UserHasModuleResource($user_has_module),
+            'user_has_module' => UserHasModuleResource::collection($user_has_module),
             'message' => 'Retrieveds successfully'
         ],200);
     }
