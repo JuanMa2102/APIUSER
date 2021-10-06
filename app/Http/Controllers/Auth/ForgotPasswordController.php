@@ -19,9 +19,10 @@ class ForgotPasswordController extends Controller
     public function forgotPassword(ForgotRequest $request){
        
         //$email = $request->input('email');
-        $data = $request->all();
+        $data = $request->only('email');
+        
 
-        if(User::where('email', $data['email'])->doesntExist()){
+        if(User::where('email', $data)->doesntExist()){
             return response([
                 'message' => 'No existe el usuario'
             ], 404);
@@ -52,7 +53,7 @@ class ForgotPasswordController extends Controller
     public function resetPassword(ResetRequest $request){
         $data = $request->all();
 
-        if(!$passwordResets = DB::table('password_resets')->where('token', $data['token'])->first()){
+         if(!$passwordResets = DB::table('password_resets')->where('token', $data['token'])->first()){
             return response([
                 'message' => 'Token Invalido'
             ],400);
