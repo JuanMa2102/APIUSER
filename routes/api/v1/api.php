@@ -39,13 +39,13 @@ Route::prefix('/user')->group(function(){
     Route::post('/forgot-password', [ForgotPasswordController::class,  'forgotPassword'])->name('password.reset');
     Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
     
-    Route::apiResource('users', UserController::class)->middleware('auth:api');
-    //Route CRUD Aplication
+    Route::apiResource('users', UserController::class);
     Route::apiResource('aplications', AplicationController::class);
     // Route CRUD Business
     Route::apiResource('businesses', BusinessController::class);
     // Route CRUD Modules
     Route::apiResource('modules', ModuleController::class);
+    Route::get('modules/aplication/{id}', [ModuleController::class, 'getAll']);
     // Route CRUD Business unit
     Route::apiResource('businesUnits', BusinessUnitController::class);
     // Route CRUD User unit

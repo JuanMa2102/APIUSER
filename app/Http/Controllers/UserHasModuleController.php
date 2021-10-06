@@ -39,7 +39,7 @@ class UserHasModuleController extends Controller
         $data = $request->all();
 
         $vaidator = Validator::make($data,[
-            'id_user'=> 'reuquired',
+            'id_user'=> 'required',
             'id_module' => 'required'
         ]);
         if($vaidator->fails()){
@@ -80,6 +80,28 @@ class UserHasModuleController extends Controller
     {
         //
         $user_has_module = UserHas::find($id);
+        if(empty($user_has_module)){
+            return response()->json([
+                'message' => 'User has module not exists'  
+            ],400);
+        }
+        return response()->json([
+            'user_has_module' => new UserHasModuleResource($user_has_module),
+            'message' => 'Retrieveds successfully'
+        ],200);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\UserHas  $userHas
+     * @return \Illuminate\Http\Response
+     */
+    public function getUsuarios($id)
+    {
+        $user_has_module = UserHas::where('id_module', $id)
+               ->get();
+
         if(empty($user_has_module)){
             return response()->json([
                 'message' => 'User has module not exists'  

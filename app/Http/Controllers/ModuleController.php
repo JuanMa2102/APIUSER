@@ -88,6 +88,22 @@ class ModuleController extends Controller
         ],200);
     }
 
+    public function getAll($id)
+    {
+        $module = Module::where('id_aplication', $id)
+               ->get();
+
+        if(empty($module)){
+            return response()->json([
+                'message' => 'Module not exists'
+            ], 400);
+        }
+        return response()->json([
+            'module' => new ModuleResource($module),
+            'message' => 'Retrieveds successfully'
+        ],200);
+    }
+
     /**
      * Update the specified resource in storage.
      *
