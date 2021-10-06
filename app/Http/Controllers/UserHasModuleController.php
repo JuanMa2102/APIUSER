@@ -39,7 +39,7 @@ class UserHasModuleController extends Controller
         $data = $request->all();
 
         $vaidator = Validator::make($data,[
-            'id_user'=> 'reuquired',
+            'id_user'=> 'required',
             'id_module' => 'required'
         ]);
         if($vaidator->fails()){

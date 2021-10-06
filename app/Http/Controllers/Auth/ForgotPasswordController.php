@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 
 
 class ForgotPasswordController extends Controller
@@ -28,7 +28,7 @@ class ForgotPasswordController extends Controller
             ], 404);
         }
 
-        $token = Str::random(10);
+        $token = Str::random(20);
         try{
         DB::table('password_resets')->insert([
             'email' => $data['email'],
