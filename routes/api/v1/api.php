@@ -43,13 +43,17 @@ Route::prefix('/user')->group(function(){
     Route::apiResource('aplications', AplicationController::class);
     // Route CRUD Business
     Route::apiResource('businesses', BusinessController::class);
+    Route::get('businesses/aplication/{id}', [BusinessController::class, 'getAll']);
     // Route CRUD Modules
     Route::apiResource('modules', ModuleController::class);
     Route::get('modules/aplication/{id}', [ModuleController::class, 'getAll']);
     // Route CRUD Business unit
     Route::apiResource('businesUnits', BusinessUnitController::class);
+    Route::get('businesUnits/businesses/{id}', [BusinessUnitController::class, 'getUnit']);
     // Route CRUD User unit
     Route::apiResource('userUnits', UserUnitController::class);
+    Route::get('userUnits/businesUnits/{id}', [UserUnitController::class, 'getUsuarios']);
     // Rouer CRUS User has module
     Route::apiResource('userHasModule', UserHasModuleController::class);
+    Route::get('userHasModule/modules/{id}', [UserHasModuleController::class, 'getUsuarios']);
 });

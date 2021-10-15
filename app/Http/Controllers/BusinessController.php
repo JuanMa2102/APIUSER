@@ -37,13 +37,13 @@ class BusinessController extends Controller
         $data = $request->all();
 
         $validator = Validator::make($data,[
-            'name' => 'required|string|min:max',
+            'name' => 'required|string|max:255',
             'direction' => 'required|string|max:255',
-            'cp' => 'required|integer|min:5',
+            'cp' => 'required|string|min:5',
             'contact' => 'required|string|max:255',
             'phone' => 'required|string|max:10|min:10',
             'email' => 'required|string|max:30',
-            'rfc' => 'max:13|min:13',
+            'rfc' => 'string|max:14',
             'id_aplication' => 'required'
         ]);
 
@@ -74,6 +74,8 @@ class BusinessController extends Controller
         ],200);
     }
 
+
+
     /**
      * Display the specified resource.
      *
@@ -95,6 +97,23 @@ class BusinessController extends Controller
         ],200);
 
     }
+    
+    public function getAll($id)
+    {
+        $business = Business::where('id_aplication', $id)
+               ->get();
+
+        if(empty($business)){
+            return response()->json([
+                'message' => 'Module not exists'
+            ], 400);
+        }
+        return response()->json([
+            'business' => new BusinessResource($business),
+            'message' => 'Retrieveds successfully'
+        ],200);
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -130,7 +149,7 @@ class BusinessController extends Controller
         //
         $business = Business::find($id);
         if(empty($business)){
-            return response()->json([
+            response()->json([
                 'message' => 'Business not found'
             ],400);
         }

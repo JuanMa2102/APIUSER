@@ -55,7 +55,7 @@ class UserUnitController extends Controller
         }
 
         $user = User::where('id', '=', $data['id_user']);
-        if($$user == null){
+        if($user == null){
             return response()->json([
                 'message' => 'No existe este usuario con este identificador, porfavor registra un usuario primero'
             ],400);
@@ -81,6 +81,26 @@ class UserUnitController extends Controller
         if(empty($user_unit)){
             return response()->json([
                 'message' => 'User Unit not exists'
+            ],400);
+        }
+        return response()->json([
+            'user_unit' => new UserUnitResource($user_unit),
+            'message' => 'Retrieveds successfully'
+        ],200);
+    }
+
+//************************************************************************************************
+
+    public function getUsuarios($id)
+    {
+        $user_unit = UnitUser::join( 'users','user_units.id_user','=', 'users.id' )
+        ->select('user_units.id','users.name','users.phone', 'id_user','id_business_unit')
+        ->where('id_business_unit', $id)
+        ->get();
+     
+        if(empty($user_unit)){
+            return response()->json([
+                'message' => 'User has module not exists'  
             ],400);
         }
         return response()->json([

@@ -40,8 +40,10 @@ class BusinessUnitController extends Controller
         $validator = Validator::make($data,[
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'id_business' => 'reuquired'
+            'id_business' => 'required'
         ]);
+
+
         if($validator->fails()){
             return response()->json([
                 'error' => $validator->errors(),
@@ -62,7 +64,6 @@ class BusinessUnitController extends Controller
             'message' => 'Successfully create'
         ],200);
     }
-
     /**
      * Display the specified resource.
      *
@@ -83,6 +84,25 @@ class BusinessUnitController extends Controller
             'business_unit' => new BusinessUnitResource($business_unit),
             'message' => 'Retrieveds successfully'
         ], 200);
+    }
+
+
+
+
+    public function getUnit($id)
+    {
+        $business_unit = UnitBusiness::where('id_business', $id)
+               ->get();
+
+        if(empty($business_unit)){
+            return response()->json([
+                'message' => 'unit not exists'
+            ], 400);
+        }
+        return response()->json([
+            'business_unit' => new BusinessUnitResource($business_unit),
+            'message' => 'Retrieveds successfully'
+        ],200);
     }
 
     /**
@@ -123,10 +143,11 @@ class BusinessUnitController extends Controller
             return response()->json([
                 'message' => 'Business Unit not found'
             ],400);
-            $business_unit->delete($id);
-            return response()->json([
-                'message' => 'Delete successfully'
-            ],200);
         }
+        $business_unit->delete($id);
+        return response()->json([
+            'message' => 'Delete successfully'
+        ],200);
+        
     }
 }

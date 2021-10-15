@@ -8,6 +8,7 @@ use App\Http\Resources\UserHasModuleResource;
 use App\Models\Module;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 
 class UserHasModuleController extends Controller
@@ -91,17 +92,15 @@ class UserHasModuleController extends Controller
         ],200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\UserHas  $userHas
-     * @return \Illuminate\Http\Response
-     */
+//************************************************************************************************
+
     public function getUsuarios($id)
     {
-        $user_has_module = UserHas::where('id_module', $id)
-               ->get();
-
+        $user_has_module = UserHas::join( 'users','user_has_modules.id_user','=', 'users.id' )
+        ->select('user_has_modules.id','users.name','users.phone', 'id_user','id_module')
+        ->where('id_module', $id)
+        ->get();
+     
         if(empty($user_has_module)){
             return response()->json([
                 'message' => 'User has module not exists'  
@@ -112,7 +111,6 @@ class UserHasModuleController extends Controller
             'message' => 'Retrieveds successfully'
         ],200);
     }
-
     /**
      * Update the specified resource in storage.
      *

@@ -40,7 +40,7 @@ class UnitBusiness extends Model
     public static $rules = [
         'name' => 'required|string|max:255',
         'description' => 'required|string|max:255',
-        'id_business' => 'reuquired'
+        'id_business' => 'required'
     ];
 
     //relacion entre tablas
